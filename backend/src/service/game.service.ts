@@ -23,6 +23,6 @@ export const findGameById = async (id: string) => {
     const game = await Game.findById(id);
     return game;
   } catch (error) {
-    throw new Error(`Could not get game ${error}`);
+    throw new Error(`Could not get game by id  ${error}`);
   }
 };

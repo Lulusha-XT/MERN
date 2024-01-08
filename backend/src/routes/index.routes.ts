@@ -7,6 +7,6 @@ router.get("/", (_, res) => {
   res.send("this works");
 });
 
-router.use("/game", gameRoutes);
+router.use("/games", gameRoutes);
 
 export default router;

@@ -13,6 +13,7 @@ const getAllGames = async (req: Request, res: Response, next: Function) => {
 
 const createGame = async (req: Request, res: Response, next: Function) => {
   const game: IGame = {
+    name: req.body.name,
     address: req.body.address,
     date: req.body.date,
     fieldNumber: req.body.fieldNumber,

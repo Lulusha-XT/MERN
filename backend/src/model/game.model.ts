@@ -1,6 +1,7 @@
 import mongoose, { Document, Model, Schema } from "mongoose";
 
 interface IGame {
+  name: string;
   address: string;
   numberOfPeople: number;
   date: Date;
@@ -13,6 +14,7 @@ interface IGameDocument extends IGame, Document {
 }
 
 const gameSchema = new Schema<IGameDocument>({
+  name: { type: String, required: true },
   address: { type: String, required: true },
   numberOfPeople: { type: Number, required: true },
   date: { type: Date, required: true },
