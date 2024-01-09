@@ -30,6 +30,18 @@ export const getGames = createAsyncThunk<Game[]>(
   }
 );
 
+export const getGameById = createAsyncThunk<Game, string>(
+  "games/getGamesById",
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/games/${id}`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const createGame = createAsyncThunk<Object, Game>(
   "games/createGame",
   async (data, thunkAPI) => {
@@ -68,6 +80,17 @@ export const gameSlice = createSlice({
     builder.addCase(getGames.rejected, (sate, action) => {
       sate.loading = false;
       sate.errors = action.payload;
+    });
+    builder.addCase(getGameById.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getGameById.fulfilled, (state, action) => {
+      state.singleGame = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getGameById.rejected, (state, action) => {
+      state.errors = action.payload;
+      state.loading = false;
     });
   },
 });

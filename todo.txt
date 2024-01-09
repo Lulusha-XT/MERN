@@ -1,0 +1,20 @@
+Game CRUD
+- Create Form to Create Game
+- From to Update
+- Details of Game
+
+Auth Methods
+- User Schema
+- Login, signUp
+- AuthRoute {Logged In, Admin}
+
+Rating CRUD
+-
+
+
+
+//due to reload problem
+yarn dev --force
+
+//due to mongo connection problem
+start from the service
