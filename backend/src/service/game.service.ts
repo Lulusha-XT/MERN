@@ -26,3 +26,21 @@ export const findGameById = async (id: string) => {
     throw new Error(`Could not get game by id  ${error}`);
   }
 };
+
+export const findByIdAndUpdate = async (id: String, game: IGame) => {
+  try {
+    const gameUpdated = await Game.findByIdAndUpdate(id, game, { new: true });
+    return gameUpdated;
+  } catch (error) {
+    throw new Error(`Could not get game by id ${error}`);
+  }
+};
+
+export const deleteGame = async (id: string) => {
+  try {
+    const deletedGame = await Game.findByIdAndDelete(id);
+    return deletedGame;
+  } catch (error) {
+    throw new Error(`Could not delete game`);
+  }
+};

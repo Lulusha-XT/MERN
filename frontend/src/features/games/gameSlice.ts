@@ -1,11 +1,11 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Game } from "../../interfaces/Game";
+import { IGame, IGameDocument } from "../../interfaces/Game";
 import axios from "axios";
 
 interface GameState {
-  games: Game[] | null;
+  games: IGameDocument[] | null;
   loading: boolean;
-  singleGame: Game | null;
+  singleGame: IGameDocument | null;
   errors: any;
 }
 
@@ -17,7 +17,7 @@ const initialState: GameState = {
 };
 
 // actions are processes that get data from backend
-export const getGames = createAsyncThunk<Game[]>(
+export const getGames = createAsyncThunk<IGameDocument[]>(
   "games/getGames",
   async (_, thunkAPI) => {
     try {
@@ -30,7 +30,7 @@ export const getGames = createAsyncThunk<Game[]>(
   }
 );
 
-export const getGameById = createAsyncThunk<Game, string>(
+export const getGameById = createAsyncThunk<IGameDocument, string>(
   "games/getGamesById",
   async (id, thunkAPI) => {
     try {
@@ -42,7 +42,7 @@ export const getGameById = createAsyncThunk<Game, string>(
   }
 );
 
-export const createGame = createAsyncThunk<Object, Game>(
+export const createGame = createAsyncThunk<Object, IGame>(
   "games/createGame",
   async (data, thunkAPI) => {
     try {
@@ -59,15 +59,48 @@ export const createGame = createAsyncThunk<Object, Game>(
   }
 );
 
+export const updateGame = createAsyncThunk<IGameDocument, IGameDocument>(
+  "games/updateGame",
+  async (data, thunkAPI) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:8000/api/games/${data.gameId}`,
+        data
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteGame = createAsyncThunk<IGameDocument, string>(
+  "games/deleteGames",
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8000/api/games/${id}`
+      );
+      thunkAPI.dispatch(getGames());
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 // reducer => reduce to a specific state => change state
 
 export const gameSlice = createSlice({
   name: "games",
   initialState,
   reducers: {
-    setGames: (state, action: PayloadAction<Game[]>) => {
+    setGames: (state, action: PayloadAction<IGameDocument[]>) => {
       state.games = action.payload;
     },
+    // filterGame: (state, action) => {
+    //   state.games = state.games?.filter(game => game.gameId != action.payload)!
+    // }
   },
   extraReducers: (builder) => {
     builder.addCase(getGames.pending, (state) => {
@@ -89,6 +122,28 @@ export const gameSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(getGameById.rejected, (state, action) => {
+      state.errors = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(updateGame.fulfilled, (state, action) => {
+      state.singleGame = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(updateGame.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateGame.rejected, (state, action) => {
+      state.errors = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(deleteGame.fulfilled, (state, action) => {
+      state.singleGame = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(deleteGame.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteGame.rejected, (state, action) => {
       state.errors = action.payload;
       state.loading = false;
     });

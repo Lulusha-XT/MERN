@@ -9,7 +9,7 @@ export default function GamesPage() {
       <Grid container>
         {games &&
           games.map((game) => (
-            <Grid key={game.gameId} xs={4}>
+            <Grid item key={game.gameId} xs={4}>
               <Link to={`/game/${game.gameId}`}>
                 <Grid
                   sx={{
