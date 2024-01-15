@@ -63,6 +63,7 @@ const EditGamePage = () => {
       fieldNumber: game.fieldNumber,
     };
     dispatch(updateGame(data));
+
     // dispatch(createGame(data));
     // console.log("Form submitted:", game);
   };
@@ -111,7 +112,7 @@ const EditGamePage = () => {
 
             <Grid item xs={12}>
               <TextField
-                defaultValue={game.date}
+                // defaultValue={game.date}
                 InputLabelProps={{ shrink: true }}
                 onChange={(e) =>
                   setGame({
@@ -120,7 +121,7 @@ const EditGamePage = () => {
                   })
                 }
                 type="date"
-                value={game.date}
+                defaultValue={game.date}
                 fullWidth
                 label={`${game.date}`}
               />

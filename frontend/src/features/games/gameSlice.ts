@@ -67,7 +67,9 @@ export const updateGame = createAsyncThunk<IGameDocument, IGameDocument>(
         `http://localhost:8000/api/games/${data.gameId}`,
         data
       );
-      return response.data;
+      console.log(response.data.data);
+      thunkAPI.dispatch(getGames());
+      return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

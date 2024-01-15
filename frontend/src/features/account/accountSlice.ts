@@ -25,6 +25,7 @@ export const signUpUser = createAsyncThunk<IUserDocument, IUser>(
         "http://localhost:8000/api/auth/signUp",
         data
       );
+      toast.info("Succesfully Signed Up");
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

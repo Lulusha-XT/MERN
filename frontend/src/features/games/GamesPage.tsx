@@ -5,6 +5,7 @@ import GameCard from "../../components/general/GameCard";
 
 export default function GamesPage() {
   const { games } = useAppSelector((state) => state.games);
+
   return (
     <Container>
       <Typography variant="h2" fontWeight={"bold"} sx={{ mt: 5 }}>

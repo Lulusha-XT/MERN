@@ -1,4 +1,5 @@
-import { Button, Container, Grid, Input, Typography } from "@mui/material";
+import { Button, Container, Grid, Typography } from "@mui/material";
+import Input from "@mui/joy/Input";
 import React, { useState, MouseEvent } from "react";
 import { IUser } from "../../../interfaces/User";
 import { useAppDispatch } from "../../../store/store";
