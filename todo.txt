@@ -18,3 +18,8 @@ yarn dev --force
 
 //due to mongo connection problem
 start from the service
+
+auth Guards
+Daynamic Display
+getUser -> isLoggedIn -> checkUserIfLoggedIN
+signUp

@@ -1,0 +1,15 @@
+.signup-body {
+  background-image: linear-gradient(90deg, rgb(9, 35, 47), rgb(17, 39, 55));
+  height: 100vh;
+}
+
+.signup-container {
+  border-radius: 10px;
+  min-width: 500px;
+  max-width: 900px;
+}
+
+.signup-input {
+  background-color: lightgray !important;
+  border-color: lightgray !important;
+}

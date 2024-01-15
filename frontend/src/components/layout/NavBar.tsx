@@ -12,16 +12,21 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { logOutUser } from "../../features/account/accountSlice";
 
 const pages = [
   { title: "Home", route: "/" },
   { title: "Games", route: "/games" },
   { title: "Add Game", route: "/createGame" },
+  { title: "Login", route: "/login" },
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout", "Login"];
 
-function NavBar() {
+const NavBar = () => {
+  const dispatch = useAppDispatch();
+  const { isLoggedIn } = useAppSelector((state) => state.account);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -42,6 +47,11 @@ function NavBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(logOutUser());
+    navigate("/login");
   };
 
   return (
@@ -64,7 +74,7 @@ function NavBar() {
               textDecoration: "none",
             }}
           >
-            FutTube
+            Football City
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -96,15 +106,13 @@ function NavBar() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <Link to={page.route}>
-                  <MenuItem key={page.route} onClick={handleCloseNavMenu}>
-                    <Typography fontWeight={600} textAlign="center">
-                      {page.title}
-                    </Typography>
-                  </MenuItem>
-                </Link>
-              ))}
+              <Link to="/">
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography fontWeight={600} textAlign="center">
+                    Home
+                  </Typography>
+                </MenuItem>
+              </Link>
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -127,11 +135,37 @@ function NavBar() {
             FutTube
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Link to={page.route}>
+            <Link to="/">
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{
+                  my: 2,
+                  color: "white",
+                  display: "block",
+                  fontWeight: 600,
+                }}
+              >
+                Home
+              </Button>
+            </Link>
+            {isLoggedIn ? (
+              <>
+                <Link to="/creategame">
+                  <Button
+                    onClick={handleCloseNavMenu}
+                    sx={{
+                      my: 2,
+                      color: "white",
+                      display: "block",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Create Game
+                  </Button>
+                </Link>
+
                 <Button
-                  key={page.route}
-                  onClick={handleCloseNavMenu}
+                  onClick={handleLogout}
                   sx={{
                     my: 2,
                     color: "white",
@@ -139,10 +173,39 @@ function NavBar() {
                     fontWeight: 600,
                   }}
                 >
-                  {page.title}
+                  Logout
                 </Button>
-              </Link>
-            ))}
+              </>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button
+                    onClick={handleCloseNavMenu}
+                    sx={{
+                      my: 2,
+                      color: "white",
+                      display: "block",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Login
+                  </Button>
+                </Link>
+                <Link to="/signup">
+                  <Button
+                    onClick={handleCloseNavMenu}
+                    sx={{
+                      my: 2,
+                      color: "white",
+                      display: "block",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Signup
+                  </Button>
+                </Link>
+              </>
+            )}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -178,5 +241,5 @@ function NavBar() {
       </Container>
     </AppBar>
   );
-}
+};
 export default NavBar;

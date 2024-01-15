@@ -20,7 +20,10 @@ export default function SingleGamePage() {
 
   return (
     <Container sx={{ marginTop: 10 }}>
-      <Typography variant="h4" fontWeight={600}>
+      <Typography sx={{ my: 3 }} variant="h2">
+        Welcome to this Game
+      </Typography>
+      <Typography sx={{ color: "gray" }} variant="h4" fontWeight={600}>
         {`${singleGame?.address} | ${singleGame?.date
           .toString()
           .substring(0, 10)
@@ -43,7 +46,7 @@ export default function SingleGamePage() {
         </Grid>
         <Grid item xs={12}>
           <Link to={`/editGame/${id}`}>
-            <Button variant="contained"> Edit</Button>
+            <Button className="green-btn">Edit</Button>
           </Link>
         </Grid>
       </Grid>

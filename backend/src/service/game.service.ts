@@ -1,4 +1,4 @@
-import { Game, IGame } from "../model/game.model";
+import { Game, IGame } from "../model/games.model";
 
 export const getAllGames = async () => {
   try {

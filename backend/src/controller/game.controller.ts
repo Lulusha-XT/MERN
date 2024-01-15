@@ -1,4 +1,4 @@
-import { IGame } from "../model/game.model";
+import { IGame } from "../model/games.model";
 import * as gameService from "../service/game.service";
 import { Request, Response, Router } from "express";
 
